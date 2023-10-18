@@ -14,9 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Go to client folder
-        run: cd client
-
       - name: Create .env file
         run: |
           echo "VITE_APP_NAME=${{ secrets.VITE_APP_NAME }}" >> .env
@@ -25,7 +22,7 @@ jobs:
           echo "VITE_USER_VALUE=${{ secrets.VITE_USER_VALUE }}" >> .env
 
       - name: Install dependencies
-        run: npm install
+        run: cd client && npm install
 
       - name: Build
-        run: npm run build
+        run: cd client && npm run build
