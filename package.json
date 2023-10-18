@@ -1,0 +1,20 @@
+{
+  "name": "live_chat",
+  "version": "1.0.0",
+  "description": "MERN stack live-chat application.",
+  "main": "index.js",
+  "scripts": {
+    "front": "cd client && npm run build",
+    "back": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/achyutkneupane/MERN-Chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/achyutkneupane/MERN-Chat/issues"
+  },
+  "homepage": "https://github.com/achyutkneupane/MERN-Chat#readme"
+}

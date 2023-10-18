@@ -1,0 +1,31 @@
+name: Build Test
+
+on:
+  pull_request:
+    branches: [ develop ]
+  push:
+    branches: [ develop ]
+
+jobs:
+  fetest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Go to client folder
+        run: cd client
+
+      - name: Create .env file
+        run: |
+          echo "VITE_APP_NAME=${{ secrets.VITE_APP_NAME }}" >> .env
+          echo "VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT }}" >> .env
+          echo "VITE_LOGIN_TOKEN=${{ secrets.VITE_LOGIN_TOKEN }}" >> .env
+          echo "VITE_USER_VALUE=${{ secrets.VITE_USER_VALUE }}" >> .env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build

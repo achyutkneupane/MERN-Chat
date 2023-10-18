@@ -1,0 +1,11 @@
+{
+  "name": "live_chat_be",
+  "version": "1.0.0",
+  "description": "Backend for the Chat App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
