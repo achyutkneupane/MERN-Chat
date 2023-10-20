@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "front": "cd client && npm run build",
-    "back": "nodemon server.js"
+    "back": "nodemon server.js",
+    "build": "concurrently --kill-others-on-fail \"npm run front\" \"npm run back\"",
+    "dev": "concurrently --kill-others-on-fail \"cd client && npm run dev\" \"npm run back\""
   },
   "repository": {
     "type": "git",
