@@ -1,16 +1,10 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 4000;
+const app = require('express')();
+const port = 8000;
 
-// Middleware to parse JSON requests
-app.use(express.json());
-
-// Test endpoint
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'This is a test endpoint.' });
+app.get('/', (req, res) => {
+    res.send('Live Chat Server');
 });
 
-// Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is listening on port ${port}`);
 });
