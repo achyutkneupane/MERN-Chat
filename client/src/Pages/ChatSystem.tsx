@@ -2,7 +2,7 @@ const ChatSystem = () => {
   return (
     <>
       <div className="text-4xl">
-          Mantra Ideas Pvt. Ltd.
+          This is Chat System
       </div>
     </>
   )

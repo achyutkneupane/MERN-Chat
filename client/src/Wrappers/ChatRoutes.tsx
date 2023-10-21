@@ -5,6 +5,7 @@ import GuestWrapper from "@chatWrappers/GuestWrapper.tsx";
 
 import ChatSystem from "@chatSys/Pages/ChatSystem.tsx";
 import Login from "@chatSys/Pages/Auth/Login.tsx";
+import Register from "@chatPages/Auth/Register.tsx";
 
 const ChatRoutes = () => {
     return (
@@ -27,6 +28,7 @@ const ChatRoutes = () => {
                 }
             >
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Route>
         </Routes>
     );

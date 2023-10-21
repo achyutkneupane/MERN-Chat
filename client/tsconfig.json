@@ -28,6 +28,8 @@
       "@chatComponents/*": ["Components/*"],
       "@chatHooks/*": ["Hooks/*"],
       "@chatUtils/*": ["Utils/*"],
+      "@chatPages/*": ["Pages/*"],
+      "@chatEnv/*": ["env/*"],
     },
     "baseUrl": "src"
   },

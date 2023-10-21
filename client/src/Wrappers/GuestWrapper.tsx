@@ -8,8 +8,8 @@ const GuestWrapper: FC<LayoutProps> = ({children}) => {
     const isLoggedIn = useAuth();
 
     if (isLoggedIn) {
-        if (loc.pathname !== "/dashboard") {
-            window.location.href = "/dashboard";
+        if (loc.pathname !== "/") {
+            window.location.href = "/";
         }
     }
 

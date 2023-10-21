@@ -8,12 +8,12 @@ const Logins = require('../models/logins');
 
 const middlewares = require('../utils/middlewares');
 
-const firstNameChain = body('firstName').notEmpty();
+const firstNameChain = body('firstName').isLength({min: 1}).withMessage('First name is required');
 const middleNameChain = body('middleName').optional();
-const lastNameChain = body('lastName').isLength({min: 1});
-const emailChain = body('email').isEmail();
-const usernameChain = body('username').isLength({min: 1});
-const passwordChain = body('password').isLength({min: 8});
+const lastNameChain = body('lastName').isLength({min: 1}).withMessage('Last name is required');
+const emailChain = body('email').isLength({min: 1}).withMessage('Email is required').isEmail().withMessage('Invalid email address');
+const usernameChain = body('username').isLength({min: 1}).withMessage('Username is required');
+const passwordChain = body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters long');
 
 router.post(
     '/register',
@@ -29,7 +29,7 @@ router.post(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
+            return res.status(422).json({errors: errors.array().map(error => error.msg)});
         }
         await bcrypt.hash(password, 10, async (err, hashedPassword) => {
             if (err) throw err;
@@ -53,7 +53,7 @@ router.post(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
+            return res.status(422).json({errors: errors.array().map(error => error.msg)});
         }
         try {
             const user = await User.findOne({username});
@@ -75,11 +75,11 @@ router.post(
                             }, process.env.JWT_SECRET);
                         res.status(200).json({message: 'Authentication successful', token: token});
                     } else {
-                        res.status(401).json({message: 'Authentication failed'});
+                        res.status(401).json({message: 'Wrong Password'});
                     }
                 });
             } else {
-                res.status(401).json({message: 'Authentication failed'});
+                res.status(401).json({message: 'User not found'});
             }
         } catch (err) {
             res.status(500).json({message: err.message});
