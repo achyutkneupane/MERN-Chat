@@ -1,11 +1,18 @@
+import {setActiveChat} from "@chatUtils/helpers.ts";
+import Messages from "@chatComponents/Layouts/Messages.tsx";
+import {useParams} from "react-router-dom";
+
 const ChatSystem = () => {
-  return (
-    <>
-      <div className="text-4xl">
-          This is Chat System
-      </div>
-    </>
-  )
+    setActiveChat("Chat System One");
+    const props = useParams();
+
+    return (
+        <>
+            <div id="chatArea">
+                <Messages chatId={props.id}/>
+            </div>
+        </>
+    )
 }
 
-export default ChatSystem
+export default ChatSystem;

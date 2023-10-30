@@ -17,7 +17,7 @@ const ChatRoutes = () => {
                     </AuthWrapper>
                 }
             >
-                <Route path="/" element={<ChatSystem />} />
+                <Route path="/:id?" element={<ChatSystem />} />
             </Route>
 
             <Route

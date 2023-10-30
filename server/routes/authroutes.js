@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {body, validationResult} = require('express-validator');
 
-const User = require('../models/user');
-const Logins = require('../models/logins');
+const db = require('../models/db');
+const User = db.User;
+const Logins = db.Login;
 
 const middlewares = require('../utils/middlewares');
 
@@ -91,7 +92,7 @@ router.get('/get-user',
     async (req, res) => {
         try {
             const user = await User.findOne({_id: req.decoded.id});
-            res.status(200).json({user: user});
+            res.status(200).json({user: user, message: 'User found'});
         } catch (err) {
             res.status(500).json({message: err.message});
         }

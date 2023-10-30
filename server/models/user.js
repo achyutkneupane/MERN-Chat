@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../utils/mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -38,4 +38,22 @@ const userSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+});
+
+userSchema.virtual('chatBoxes', {
+    ref: 'ChatBox',
+    localField: '_id',
+    foreignField: 'participants',
+    options: {
+        sort: {
+            'lastMessage.createdAt': -1,
+        }
+    }
+});
+
+userSchema.set('toJSON', {virtuals: true});
+
+module.exports = userSchema;
