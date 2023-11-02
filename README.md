@@ -23,7 +23,7 @@ The project uses following technologies:
 
 - [x] Add authentication
 - [x] Create a two-way chat system
-- [ ] Add a group chat system
+- [x] Add a group chat system
 - [ ] Add realtime communication using socket.io
 - [ ] Replace REST API with GraphQL
 - [ ] Add voice call feature

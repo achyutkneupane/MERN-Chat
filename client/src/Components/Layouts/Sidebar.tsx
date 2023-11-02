@@ -8,6 +8,7 @@ import {useAuth} from "@chatHooks/useAuth.ts";
 import {fullName, logout} from "@chatUtils/helpers.ts";
 import {HiOutlineLogout} from "react-icons/hi";
 import CreateChatBox from "@chatComponents/Layouts/Modal/CreateChatBox.tsx";
+import CreateGroupChat from "@chatComponents/Layouts/Modal/CreateGroupChat.tsx";
 
 interface ChatBoxItemProps {
     id: string;
@@ -118,7 +119,8 @@ const Sidebar = () => {
                         </>
                     )}
                 </div>
-                <div className="absolute bottom-5 right-5">
+                <div className="absolute bottom-5 right-5 flex justify-center">
+                    <CreateGroupChat />
                     <CreateChatBox />
                 </div>
             </div>
