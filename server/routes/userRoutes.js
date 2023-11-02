@@ -9,16 +9,16 @@ router.get(
     '/',
     middlewares.authenticated,
     async (req, res) => {
-        const user = await User.findOne({_id: req.decoded.id}).populate('chatBoxes');
+        const user = await User.findOne({_id: req.decoded.id});
         if (!user) return res.status(500).json({message: 'User not found'});
-        const chatBox = user.chatBoxes.find(item => item._id.equals(req.params.id));
-        if (!chatBox) return res.status(500).json({message: 'Invalid request'});
         try {
-            const allUsers = await User.find();
+            const exceptAuth = await User.find().where('_id').ne(user._id).select('-password');
 
-            res.status(200).json({message: 'Users fetched.', users: allUsers});
+            res.status(200).json({message: 'Users fetched.', users: exceptAuth});
         } catch (err) {
             res.status(500).json({message: err.message});
         }
     }
 );
+
+module.exports = router;

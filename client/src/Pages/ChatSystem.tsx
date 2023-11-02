@@ -1,15 +1,22 @@
-import {setActiveChat} from "@chatUtils/helpers.ts";
 import Messages from "@chatComponents/Layouts/Messages.tsx";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
+import {useEffect} from "react";
+import {usePageTitle} from "@chatHooks/usePageTitle.tsx";
 
 const ChatSystem = () => {
-    setActiveChat("Chat System One");
-    const props = useParams();
+    const params = useParams();
+    const loc = useLocation();
+    const {setActiveChatBox} = usePageTitle();
+
+
+    useEffect(() => {
+        setActiveChatBox(loc.state ? loc.state.title : "");
+    }, [loc.state]);
 
     return (
         <>
             <div id="chatArea">
-                <Messages chatId={props.id}/>
+                <Messages chatId={params.id}/>
             </div>
         </>
     )

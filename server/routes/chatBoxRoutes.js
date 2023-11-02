@@ -2,6 +2,7 @@ const router = require('express').Router();
 const middlewares = require('../utils/middlewares');
 
 const db = require('../models/db');
+const {fullName} = require("../utils/helpers");
 const User = db.User;
 const ChatBox = db.ChatBox;
 const Message = db.Message;
@@ -12,19 +13,28 @@ router.get(
     async (req, res) => {
         const user = await User.findOne({_id: req.decoded.id}).populate({
             path: 'chatBoxes',
-            populate: {
-                path: 'lastMessage'
-            }
+            populate: [
+                {
+                    path: 'lastMessage',
+                },
+                {
+                    path: 'participants',
+                    select: '-password'
+                }
+            ]
         });
         if (!user) return res.status(500).json({message: 'User not found'});
         try {
             const chatBoxes = user.chatBoxes.map((item) => {
+                const otherParticipant = item.participants.find((participant) => !participant.equals(user._id));
                 return {
                     ...item._doc,
                     lastMessage: item.lastMessage?.content || null,
                     lastMessageTime: item.lastMessage?.createdAt || null,
                     iAmLastSender: item.lastMessage?.sender.equals(user._id) || null,
-                    isUnread: false
+                    isUnread: false,
+                    participants: otherParticipant,
+                    name: item.name ?? `${fullName(otherParticipant['firstName'], otherParticipant['middleName'], otherParticipant['lastName'])}`
                 }
             });
             res.status(200).json({message: 'ChatBoxes found', chatBoxes: chatBoxes || []});
@@ -62,11 +72,19 @@ router.get(
         const chatBox = user.chatBoxes.find(item => item._id.equals(req.params.id));
         if (!chatBox) return res.status(500).json({message: 'Invalid request'});
         try {
-            const chatBoxWithMessages = await ChatBox.findOne({_id: chatBox._id}).populate('messages');
+            // const chatBoxWithMessages = await ChatBox.findOne({_id: chatBox._id}).populate('messages');
+            const chatBoxWithMessages = await ChatBox.findOne({_id: chatBox._id}).populate({
+                path: 'messages',
+                populate: {
+                    path: 'sender',
+                    select: 'firstName'
+                }
+            });
             const messages = chatBoxWithMessages.messages.map((item) => {
                 return {
                     ...item._doc,
-                    isMe: item.sender.equals(user._id)
+                    isMe: item.sender.equals(user._id),
+                    senderName: `${item.sender.firstName}`
                 }
             });
             res.status(200).json({message: 'Messages Fetched', messages: messages || []});

@@ -1,23 +1,10 @@
-import {useEffect, useState} from "react";
-import {APP_NAME} from "@chatSys/env";
+import {createContext, useContext} from "react";
 
-export const usePageTitle = () => {
-    const [pageTitle, setPageTitle] = useState<string|null>(null);
-    const [activeChatBox, setActiveChatBox] = useState<string|null>(null);
-    useEffect(() => {
-        document.title = pageTitle! || APP_NAME;
-    }, [pageTitle]);
-
-    useEffect(() => {
-        if(activeChatBox) {
-            setPageTitle(activeChatBox);
-        }
-    }, [activeChatBox]);
-
-    return {
-        pageTitle,
-        setPageTitle,
-        activeChatBox,
-        setActiveChatBox
-    };
+interface PageTitleContext {
+    pageTitle: string | null;
+    setPageTitle: (title: string | null) => void;
+    activeChatBox: string | null;
+    setActiveChatBox: (title: string | null) => void;
 }
+export const PageTitleContext = createContext<PageTitleContext|null>(null);
+export const usePageTitle = () => useContext(PageTitleContext)!;
