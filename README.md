@@ -1,5 +1,7 @@
 # Chat System
 
+[![Build Test](https://github.com/achyutkneupane/MERN-Chat/actions/workflows/buildtest.yml/badge.svg?branch=develop)](https://github.com/achyutkneupane/MERN-Chat/actions/workflows/buildtest.yml)
+
 This is a project created by [Achyut](https://achyut.com.np).
 
 ## Technologies
