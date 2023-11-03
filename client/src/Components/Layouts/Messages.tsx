@@ -4,6 +4,7 @@ import CenterSpinner from "@chatComponents/Utils/CenterSpinner.tsx";
 import {fetchMessages, sendMessage as messageSender} from "@chatUtils/fetchers/chatFetcher.ts";
 import {MessageResponse} from "@chatTypes/response.ts";
 import {AiOutlineSend} from "react-icons/ai";
+import {useLayoutSetup} from "@chatHooks/useLayoutSetup.tsx";
 
 interface MessageProps {
     id: string;
@@ -22,6 +23,7 @@ const Messages = (props: {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const messagesArea = useRef(null);
+    const {setRefetchSidebar} = useLayoutSetup();
 
     const navbarHeight = document.getElementById("navbar")?.clientHeight;
     const sendMessageAreaHeight = document.getElementById("sendMessageArea")?.clientHeight;
@@ -34,6 +36,7 @@ const Messages = (props: {
         messages: MessageResponse[];
     }) => {
         setIsLoading(false);
+        setRefetchSidebar(true);
         const messages : MessageProps[] = res.messages.map((message : MessageResponse) => {
             return {
                 id: message._id,
@@ -48,7 +51,12 @@ const Messages = (props: {
 
     useEffect(() => {
         setIsLoading(true);
-        callMessageFetcher();
+
+        const interval = setInterval(() => {
+            callMessageFetcher();
+        }, 1500);
+
+        return () => clearInterval(interval);
     }, [props.chatId]);
 
     useEffect(() => {

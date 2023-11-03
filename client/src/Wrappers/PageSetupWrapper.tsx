@@ -1,10 +1,12 @@
 import {FC, useEffect, useState} from "react";
 import {LayoutProps} from "@chatTypes/general.ts";
-import { PageTitleContext } from "@chatSys/Hooks/usePageTitle";
+import { LayoutSetupContext } from "@chatHooks/useLayoutSetup.tsx";
 
 const PageSetupWrapper: FC<LayoutProps> = ({children}) => {
     const [pageTitle, setPageTitle] = useState<string | null>(null);
     const [activeChatBox, setActiveChatBox] = useState<string | null>(null);
+
+    const [refetchSidebar, setRefetchSidebar] = useState<boolean>(false);
 
     useEffect(() => {
         setPageTitle(activeChatBox);
@@ -15,14 +17,16 @@ const PageSetupWrapper: FC<LayoutProps> = ({children}) => {
     }, [pageTitle]);
 
     return (
-        <PageTitleContext.Provider value={{
+        <LayoutSetupContext.Provider value={{
             pageTitle,
             setPageTitle,
             activeChatBox,
-            setActiveChatBox
+            setActiveChatBox,
+            refetchSidebar,
+            setRefetchSidebar
         }}>
             {children}
-        </PageTitleContext.Provider>
+        </LayoutSetupContext.Provider>
     );
 }
 

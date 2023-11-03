@@ -9,6 +9,7 @@ import {fullName, logout} from "@chatUtils/helpers.ts";
 import {HiOutlineLogout} from "react-icons/hi";
 import CreateChatBox from "@chatComponents/Layouts/Modal/CreateChatBox.tsx";
 import CreateGroupChat from "@chatComponents/Layouts/Modal/CreateGroupChat.tsx";
+import {useLayoutSetup} from "@chatHooks/useLayoutSetup.tsx";
 
 interface ChatBoxItemProps {
     id: string;
@@ -21,10 +22,16 @@ interface ChatBoxItemProps {
 
 const Sidebar = () => {
     const user: UserResponse = useAuth()!;
+    const {refetchSidebar, setRefetchSidebar} = useLayoutSetup();
     const [items, setItems] = useState<ChatBoxItemProps[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
     useEffect(() => {
-        fetchChatBoxes().then((res) => {
+        setRefetchSidebar(true);
+    }, []);
+
+    useEffect(() => {
+        refetchSidebar && fetchChatBoxes().then((res) => {
             const chats = res.chatBoxes.map((chat: ChatBoxResponse) => {
                 return {
                     id: chat._id,
@@ -37,8 +44,10 @@ const Sidebar = () => {
             });
             setItems(chats);
             setIsLoading(false);
+            setRefetchSidebar(false);
         });
-    }, []);
+    }, [refetchSidebar]);
+
     return (
         <>
             <div className="bg-white border-r-2 border-primary border-opacity-50 w-96 h-screen p-3 overflow-y-auto relative">

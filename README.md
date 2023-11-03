@@ -26,13 +26,15 @@ The project uses following technologies:
 - [x] [Authentication](https://github.com/achyutkneupane/MERN-Chat/tree/821abe1176ef3db7b20e25d6c1a1e57d39910203)
 - [x] [Two-way chat](https://github.com/achyutkneupane/MERN-Chat/tree/a14ced61f321423159f0a8251bded981ba0c73df)
 - [x] [Group chat](https://github.com/achyutkneupane/MERN-Chat/tree/bec3eaaa63f92fed1a44c9b2e180abeb05500f1b)
+- [x] [Realtime messaging with polling](https://github.com/achyutkneupane/MERN-Chat/tree/b695f2f27a420c7d72451a06dcccc5bde24e1c23)
 
 ## Roadmap
 
 - [x] Add authentication
 - [x] Create a two-way chat system
 - [x] Add a group chat system
-- [ ] Reactive relative UI components on chat
+- [x] Reactive relative UI components on chat
+- [x] Add realtime communication using polling method
 - [ ] Add realtime communication using socket.io
 - [ ] Replace REST API with GraphQL
 - [ ] Add voice call feature
